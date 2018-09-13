@@ -1,0 +1,177 @@
+{% load static %}
+{% load mytags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <title>笨笨熊</title>
+    <link href="{% static 'css/common.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'fonts/glyphicons-halflings-regular.ttf' %}" type="text/css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <link href="{% static 'css/index.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/article.css' %}" type="text/css" rel="stylesheet">
+    <style>
+        h3{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}">首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">搜搜<span class="sr-only">(current)</span></a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <li><a href="#"><img src="" alt=""></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.email }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user' %}?author_id={{ request.user.id }}">个人中心</a></li>
+                            <li><a href="#">登录后台</a></li>
+                            <li><a href="#">历史记录</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a class="a_pad" href="{% url 'login' %}"><button class="btn btn-success">登录</button></a></li>
+                    <li><a class="a_pad" href="{% url 'register' %}"><button class="btn btn-success">注册</button></a></li>
+                {% endif %}
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+{% block info %}
+    <div class="container-fluid content-box" id="article">
+        <div class="container content">
+            <div class="col-lg-9" id="art">
+                {% for info in page_info.object_list %}
+                    <div class="col-lg-4 col-md-3 col-sm-4">
+                        <a href="#"><img src="{% static 'images/default.jpg' %}" alt="" title=""></a>
+                        <div class="art-info">
+                            <h3><a href="{% url 'show' %}?article_id={{ info.id }}">{{ info.title }}</a></h3>
+                            <small>{{ info.content |strip_ele }}</small>
+                        </div>
+                        <div class="art-fields">
+                            <span class="glyphicon glyphicon-paperclip"></span>
+                            &nbsp;
+                            <span>{{ info.article_type.name}}</span>
+                        </div>
+                        <div class="art-stars">
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span class="star">{{ info.poll_num }}</span>
+                            <span class="glyphicon glyphicon-bookmark"></span>
+                            <span class="eye">{{ info.keep_num }}</span>
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span class="eye">{{ 0 }}</span>
+
+                            <div class="art-author">
+                                <a href="" data-toggle="tooltip" data-placement="top" data-container="#article"
+                                   data-original-title="笨笨熊"><span class="glyphicon glyphicon-user"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <div class="col-lg-2" id="right">
+                <div class="user-center clearfix">
+                    <span class="headimg center-block"><a href=""><img src="{% static 'images/default.jpg' %}"></a></span>
+                    <div class="user-info clearfix">
+                        {% if request.user.is_authenticated %}
+                            <a href="" class="user-name"><h4>{{ request.user.email }}</h4></a>
+                        {% endif %}
+                        <small>hello, world</small>
+                    </div>
+
+                    <div class="user-infos clearfix">
+                        <a href="{% url 'user' %}?author_id={{ request.user.id }}"><span class="glyphicon glyphicon-list-alt" data-toggle="tooltip" data-placement="top"
+                                                                                         data-original-title="我的文章" data-container="#right"></span></a>|
+                        <a href="{% url 'user' %}?author_id={{ request.user.id }}"><span class="glyphicon glyphicon-heart" data-toggle="tooltip" data-placement="top"
+                                                                                         data-original-title="我的收藏" data-container="#right"></span></a>|
+                        <a href="{% url 'user' %}?author_id={{ request.user.id }}"><span class="glyphicon glyphicon-pencil" data-toggle="tooltip" data-placement="top"
+                                                                                         data-original-title="我的评论" data-container="#right"></span></a>
+                    </div>
+                    <a href="{% url 'user' %}?author_id={{ request.user.id }}">
+                        <button type="button" class="btn btn-success">个人中心</button>
+                    </a>
+                    <a href="{% url 'logout' %}">
+                        <button type="button" class="btn btn-danger">退出账号</button>
+                    </a>
+                </div>
+                <div class="right-list clearfix">
+                    <ul class="list-group">
+                        <a class="list-group-item" href="{% url 'index' %}?time={{ request.user.id }}"><span class="glyphicon glyphicon-time"></span> &nbsp;最新发布</a>
+                        <a class="list-group-item" href="{% url 'index' %}?sx_id={{ request.user.id }}"><span class="glyphicon glyphicon-eye-open"></span> &nbsp;最多收藏</a>
+                        <a class="list-group-item" href="{% url 'index' %}?comment={{ request.user.id }}"><span class="glyphicon glyphicon-pencil"></span> &nbsp;最多评论</a>
+                        <a class="list-group-item" href=""><span class="glyphicon glyphicon-circle-arrow-down"></span> &nbsp;最多下载</a>
+
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <nav aria-label="Page navigation" class="text-center">
+        <ul class="pagination">
+            <li class="{% if not page_info.has_previous %}disabled{% endif %}">
+                {% if page_info.has_previous %}
+                    <a href="{% url 'index' %}?page={{ page_info.previous_page_number }}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% else %}
+                    <a href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+            {% for page_num in page_info.paginator.page_range %}
+                <li class="{% if page_num == page_info.number %}active{% endif %}"><a href="{% url 'index' %}?page={{ page_num }}">{{ page_num }}</a></li>
+            {% endfor %}
+            <li class="{% if not page_info.has_next %}disabled{% endif %}">
+                {% if page_info.has_next %}
+                    <a href="{% url 'index' %}?page={{ page_info.next_page_number }}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% else %}
+                    <a href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                {% endif %}
+            </li>
+        </ul>
+    </nav>
+    <script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/common.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/index.js' %}" type="text/javascript"></script>
+    <script>
+
+    </script>
+    </body>
+
+    </html>
+{% endblock %}

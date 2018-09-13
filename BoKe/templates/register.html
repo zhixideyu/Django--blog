@@ -1,0 +1,38 @@
+{% extends 'login.html' %}
+{% block title %}
+<title>注册</title>
+{% endblock %}
+{% block body %}
+    <body>
+    <div class="container">
+
+      <form class="form-signin" action="{% url 'register' %}" method="post">
+          {% csrf_token %}
+        <h2 class="form-signin-heading text-center">注册账户</h2>
+        <label for="inputEmail" class="sr-only">邮箱地址</label>
+        <input name="email" type="email" id="inputEmail" class="form-control" placeholder="邮箱地址" required autofocus>
+          {% if mistake %}
+          <h4>{{ mistake }}</h4>
+          {% endif %}
+          {{ form.email.errors }}
+        <label for="inputPassword" class="sr-only">密码</label>
+        <input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+          {{ form.password.errors }}
+        <input name="rePassword" type="password" id="inputPassword" class="form-control" placeholder="确认密码" required>
+          {{ form.rePassword.errors }}
+          {% if error %}
+          <h3>{{ error }}</h3>
+          {% endif %}
+          {{ form.captcha }}
+          {{ form.captcha.errors }}
+
+        <button class="btn btn-lg btn-primary btn-block" type="submit">注册</button>
+      </form>
+
+    </div> <!-- /container -->
+     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+  </body>
+
+{% endblock %}
+

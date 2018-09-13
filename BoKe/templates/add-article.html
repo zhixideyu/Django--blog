@@ -1,0 +1,43 @@
+{% extends 'users.html' %}
+{% load static %}
+{% block div %}
+     <div class="position clearfix"><a href="{% url 'index' %}">首页</a>/<a href="{% url 'user' %}?author_id={{ request.user.id }}">个人中心</a></div>
+{% endblock %}
+
+{% block a %}
+    <a class="list-group-item" href="">
+                        <span class="badge red">0</span>
+
+                        <i class="fa fa-book"></i>&nbsp;我的文章
+                    </a>
+                    <a class="list-group-item" href="">
+                        <span class="badge">0</span>
+                        <i class="fa fa-heart"></i>&nbsp;我收藏的文章
+                    </a>
+                    <a class="list-group-item" href="">
+                        <span class="badge">0</span>
+                        <i class="fa fa-star"></i>&nbsp;我评论的文章
+                    </a>
+{% endblock %}
+
+{% block class %}
+        <div class="col-md-8 user-right">
+            <div class="user-right-n clearfix">
+                <form action="{% url 'add' %}" method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="author_id" value="{{ request.user.id}}">
+                <h3><strong>发表新文章</strong></h3>
+                <input name="title" type="text" class="art-tit ipt" id="art-tit" placeholder="请输入文章标题" required>
+                <span class="glyphicon glyphicon-hand-down"></span></span>
+                <input name="type" type="text" class="art-type ipt" id="art-type" placeholder="请输入文章分类标签" required>
+
+                <textarea name="content" id="content" placeholder="请输入文章内容" required>
+
+                </textarea>
+                <button type="submit" class="btn btn-success sub">发表文章</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

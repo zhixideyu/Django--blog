@@ -1,0 +1,266 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心</title>
+    <link href="{% static 'css/common.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/user.css'%}" type="text/css" rel="stylesheet">
+    <link href="{% static 'css/bootstrap.min.css' %}" type="text/css" rel="stylesheet">
+    <link href="{% static 'fonts/glyphicons-halflings-regular.ttf' %}" type="text/css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'index' %}">首页</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">搜搜<span class="sr-only">(current)</span></a></li>
+
+            </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+
+                    <li><a href="#"><img src="" alt=""></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{ request.user.email }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{% url 'user' %}">个人中心</a></li>
+                            <li><a href="#">登录后台</a></li>
+                            <li><a href="#">历史记录</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{% url 'logout' %}">注销</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li><a class="a_pad" href="{% url 'login'%}"><button class="btn btn-success">登录</button></a></li>
+                    <li><a class="a_pad" href="{% url 'register' %}"><button class="btn btn-success">注册</button></a></li>
+                {% endif %}
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<!--主导航部分-->
+
+<div class="container user">
+    {% block div %}
+        <div class="position clearfix"><a href="{% url 'index' %}">首页</a>/<a href="{% url 'user' %}?author_id={{ request.user.id }}">个人中心</a></div>
+    {% endblock %}
+    <div class="user-cont clearfix">
+        <div class="col-md-4 user-left">
+            <div class="user-left-n clearfix">
+                <a href="#" class="user-headimg f"><img src="{% static 'images/default.jpg' %}"></a>
+                <div class="user-name f">
+                    <h4>{{ request.user.email }}</h4>
+                    <p>hello,world</p>
+                </div>
+            </div>
+            <div class="user-left-n clearfix">
+                <ul class="list-group">
+                    {% block a %}
+                        <a class="list-group-item" href="#">
+                            <span class="badge red">{{ page_info.paginator.object_list.count }}</span>
+                            <i class="fa fa-book"></i>&nbsp;我的文章
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <span class="badge">{{ keep_info.paginator.object_list.count }}</span>
+                            <i class="fa fa-heart"></i>&nbsp;我收藏的文章
+                        </a>
+                        <a class="list-group-item" href="#">
+                            <span class="badge">{{ comment_info.paginator.object_list.count}}</span>
+                            <i class="fa fa-star"></i>&nbsp;我评论的文章
+                        </a>
+                    {% endblock %}
+                </ul>
+                <a href="{% url 'add' %}" class="btn btn-success infos"><i class="fa fa-pencil"></i>&nbsp;开始写作</a>
+                <a href="{% url 'update' %}" class="btn btn-info"><i class="fa fa-cogs"></i>&nbsp;修改个人资料</a>
+            </div>
+        </div>
+        {% block class %}
+            <div class="col-md-8 user-right">
+                <div class="user-right-n clearfix">
+                    <ul id="right-tab" class="nav nav-tabs">
+                        <li role="presentation" class="active">
+                            <a href="#myArticle" id="home-tab1" data-toggle="tab"><i class="fa fa-book"></i>&nbsp;我的文章</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#myCollection" id="home-tab2" data-toggle="tab"><i class="fa fa-star"></i>&nbsp;我收藏的文章</a>
+                        </li>
+                        <li role="presentation">
+                            <a href="#qd" id="home-tab3" data-toggle="tab"><i class="fa fa-edit"></i>&nbsp;我评论的文章</a>
+                        </li>
+                    </ul>
+
+                    <div class="user-right-n clearfix tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="myArticle">
+                            {% for info in page_info.object_list %}
+                                <div class="art-row">
+                                    <a href="#" class="author"><i class="fa fa-user"></i>&nbsp;<span>{{ request.user.email }}</span></a> <a href="#" class="time"><i class="fa fa-clock-o"></i>&nbsp;<span>{{ info.publish_time }}</span></a> <a href="#" class="time"><i class="fa fa-list-ul"></i>&nbsp;发表在:&nbsp;<span>{{ info.article_type.name }}</span></a>
+                                    <h4><a href="{% url 'show' %}?article_id={{ info.id }}" class="title">{{ info.title }}</a></h4>
+                                    <a href="#" class="author"><i class="fa fa-comment"></i>&nbsp;评论:&nbsp;<span>{{ info.comment_num }}</span></a> <a href="#" class="time"><i class="fa fa-eye"></i>&nbsp;阅读:&nbsp;<span>{{ info.poll_num }}</span></a> <a href="#" class="time"><i class="fa fa-heart"></i>&nbsp;收藏:&nbsp;<span>{{ info.keep_num }}</span></a>
+                                </div>
+                            {% endfor %}
+                            {% if page_info %}
+                                <nav aria-label="Page navigation" class="text-center">
+                                    <ul class="pagination">
+                                        <li class="{% if not page_info.has_previous %}disabled{% endif %}">
+                                            {% if page_info.has_previous %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&page={{ page_info.previous_page_number }}&collect_page={{ keep_info.number }}&comment_info={{ comment_info.number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                        {% for page_num in page_info.paginator.page_range %}
+                                            <li class="{% if page_num == page_info.number %}active{% endif %}"><a href="{% url 'user' %}?author_id={{ request.user.id }}&page={{ page_num }}&collect_page={{ keep_info.number }}&comment_info={{ comment_info.number }}">{{ page_num }}</a></li>
+                                        {% endfor %}
+                                        <li class="{% if not page_info.has_next %}disabled{% endif %}">
+                                            {% if page_info.has_next %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&page={{ page_info.next_page_number }}&collect_page={{ keep_info.number }}&comment_info={{ comment_info.number }}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        </div>
+
+                        <div role="tabpanel" class="tab-pane" id="myCollection">
+                            {% for x in keep_info.object_list %}
+                                <div class="art-row">
+                                    <a href="#" class="author"><i class="fa fa-user"></i>&nbsp;<span>{{ x.user.email }}</span></a> <a href="#" class="time"><i class="fa fa-clock-o"></i>&nbsp;<span>{{ x.article.publish_time }}</span></a> <a href="#" class="time"><i class="fa fa-list-ul"></i>&nbsp;发表在:&nbsp;<span>{{ x.article.article_type.name }}</span></a>
+                                    <h4><a href="{% url 'show' %}?article_id={{ x.article.id }}" class="title">{{ x.article.title }}</a></h4>
+                                    <a href="#" class="author"><i class="fa fa-comment"></i>&nbsp;评论:&nbsp;<span>{{ x.article.comment_num }}</span></a> <a href="#" class="time"><i class="fa fa-eye"></i>&nbsp;点赞数:&nbsp;<span>{{ x.article.poll_num }}</span></a> <a href="#" class="time"><i class="fa fa-heart"></i>&nbsp;收藏:&nbsp;<span>{{ x.article.keep_num }}</span></a>
+                                </div>
+                            {% endfor %}
+                            {% if keep_info %}
+                                <nav aria-label="Page navigation" class="text-center">
+                                    <ul class="pagination">
+                                        <li class="{% if not keep_info.has_previous %}disabled{% endif %}">
+                                            {% if keep_info.has_previous %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&collect_page={{ keep_info.previous_page_number }}&page={{ page_info.number }}&comment_info={{ comment_info.number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                        {% for page_num in keep_info.paginator.page_range %}
+                                            <li class="{% if page_num == keep_info.number %}active{% endif %}"><a href="{% url 'user' %}?author_id={{ request.user.id }}&collect_page={{ page_num }}&page={{ page_info.number }}&comment_info={{ comment_info.number }}">{{ page_num }}</a></li>
+                                        {% endfor %}
+                                        <li class="{% if not keep_info.has_next %}disabled{% endif %}">
+                                            {% if keep_info.has_next %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&collect_page={{ keep_info.next_page_number }}&page={{ page_info.number }}&comment_info={{ comment_info.number }}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+                            {% endif %}
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="qd">
+                            {% for com in comment_info.object_list %}
+                                <div class="art-row">
+                                    <a href="" class="author"><i class="fa fa-user"></i>&nbsp;<span>{{ com.user.email }}</span></a> <a href="" class="time"><i class="fa fa-clock-o"></i>&nbsp;<span>{{ com.article.publish_time }}</span></a> <a href="" class="time"><i class="fa fa-list-ul"></i>&nbsp;发表在:&nbsp;<span>{{ com.article.article_type.name }}</span></a>
+                                    <h4><a href="{% url 'show' %}?article_id={{ com.article.id }}" class="title">{{ com.article.title }}</a></h4>
+                                    <a href="#" class="author"><i class="fa fa-comment"></i>&nbsp;评论:&nbsp;<span>{{ com.article.comment_num }}</span></a> <a href="#" class="time"><i class="fa fa-eye"></i>&nbsp;点赞:&nbsp;<span>{{ com.article.poll_num }}</span></a> <a href="#" class="time"><i class="fa fa-heart"></i>&nbsp;收藏:&nbsp;<span>{{ com.article.keep_num }}</span></a>
+                                </div>
+                            {% endfor %}
+                            {% if comment_info %}
+                                <nav aria-label="Page navigation" class="text-center">
+                                    <ul class="pagination">
+                                        <li class="{% if not comment_info.has_previous %}disabled{% endif %}">
+                                            {% if comment_info.has_previous %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&comment_page={{ comment_info.previous_page_number }}&page={{ page_info.number}}&collect_page={{ comment_info.number }}" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Previous">
+                                                    <span aria-hidden="true">&laquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                        {% for page_num in comment_info.paginator.page_range %}
+                                            <li class="{% if page_num == comment_info.number %}active{% endif %}"><a href="{% url 'user' %}?author_id={{ request.user.id }}&comment_page={{ page_num }}&page={{ page_info.number}}&collect_page={{ comment_info.number }}">{{ page_num }}</a></li>
+                                        {% endfor %}
+                                        <li class="{% if not comment_info.has_next %}disabled{% endif %}">
+                                            {% if comment_info.has_next %}
+                                                <a href="{% url 'user' %}?author_id={{ request.user.id }}&comment_page={{ comment_info.next_page_number }}&page={{ page_info.number}}&collect_page={{ comment_info.number }}" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% else %}
+                                                <a href="#" aria-label="Next">
+                                                    <span aria-hidden="true">&raquo;</span>
+                                                </a>
+                                            {% endif %}
+                                        </li>
+                                    </ul>
+                                </nav>
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        {% endblock %}
+</div>
+
+<nav class="foot navbar-inverse navbar-fixed-bottom">
+    <ul class="list-inline">
+        <li class="footer-ss"><a href="">在线反馈</a></li>
+        <li class="footer-ss"><a href="">帮助中心</a></li>
+        <li>Copyright © 2014-2016 千寻博客 Thousands Find 备案号:赣ICP备13043785号-1.</li>
+    </ul>
+</nav>
+<script src="{% static 'js/jquery.min.js' %}" type="application/javascript"></script>
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/common.js' %}" type="text/javascript"></script>
+<script>
+    var scrollTop = 0;
+    $(window).scroll(function () {
+        var nowScrollTop = $(document).scrollTop();
+        if (nowScrollTop > scrollTop) {
+            $('.wrap').addClass('hide-wrap');
+        } else {
+            $('.wrap').removeClass('hide-wrap');
+        }
+        scrollTop = nowScrollTop;
+    });
+
+    $('.nav-tabs li a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    });
+</script>
+</body>
+</html>

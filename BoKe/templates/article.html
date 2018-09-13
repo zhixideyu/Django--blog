@@ -1,0 +1,273 @@
+{% extends 'homepage.html' %}
+{% load static%}
+{% block info %}
+<div class="container-fluid content-box" id="article">
+    <div class="container content">
+
+        <!-- 左 -->
+        <div class="col-lg-9 col-md-12 col-sm-12">
+
+            <div class="project">
+
+                <!-- 文章头部 -->
+                <div class="project-header clearfix">
+                    <h1>{{ info.title}}</h1>
+                    <p>所属分类: {{ info.article_type.name }}</p>
+                    <div class="l">
+                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="最后更新时间"
+                              data-container="#article"><span class="glyphicon glyphicon-time"></span>&nbsp;{{ info.publish_time }}</span>
+                        <a href="{% url 'poll' %}?article_id={{ info.id }}">
+                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="点赞数"
+                              data-container="#article">
+                            {% if is_poll %}
+                            <span class="glyphicon glyphicon-heart"></span>
+                            {% else %}
+                            <span class="glyphicon glyphicon-heart-empty"></span>&nbsp;{% endif %}{{ info.poll_num }}</span></a>
+                     &nbsp;
+                        <a href="{% url 'keep' %}?article_id={{ info.id }}">
+                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="收藏数"
+                              data-container="#article"><span class="glyphicon glyphicon-bookmark"></span>&nbsp;{{ info.keep_num }}</span></a>
+                        &nbsp;
+                        <a href="">
+                        <span data-toggle="tooltip" data-placement="bottom" data-original-title="浏览数"
+                              data-container="#article"><span class="glyphicon glyphicon-eye-open"></span>&nbsp;{{ info.browse_num }}</span></a>
+                        &nbsp;
+                        <a href="#">
+                        <span style="border-right: none" data-toggle="tooltip" data-placement="bottom"
+                              data-original-title="评论数" data-container="#article"><span class="glyphicon glyphicon-pencil"></span>&nbsp;{{ num }}</span></a>
+                    </div>
+                </div>
+                <!-- 文章头部 -->
+
+                <!-- 文章主体内容部分 -->
+                <div class="project-content clearfix">
+                    {% autoescape off %}
+                    <p>{{ info.content }}</p>
+                    {% endautoescape %}
+                </div>
+                <!-- 文章主体内容部分 -->
+
+                <!-- 相关文章推荐部分 -->
+                <div class="about-article clearfix">
+                    <div class="about-tit">相关文章推荐</div>
+
+                    <div class="col-lg-4 col-md-3 col-sm-4">
+                        <a href=""><img src="{% static 'images/default.jpg' %}" alt="" title=""></a>
+                        <div class="art-info">
+                            <h4><a href=""> OrgChart组织架构图控件</a></h4>
+                            <small></small>
+                            <small>jQuery OrgChart 是一个用来绘制组织结构图的 jQuery 插件。 可以自己定加载自己想要的组织架构，通过json的形式</small>
+                        </div>
+                        <div class="art-fields">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            &nbsp;
+                            <span>jQuery插件</span>
+                        </div>
+                        <div class="art-stars">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span >&nbsp;105</span>
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span class="">&nbsp;105</span>
+                            <div class="art-author">
+                                <a href="" data-toggle="tooltip" data-placement="top" data-container="#article"
+                                   data-original-title="笨笨熊"><span class="glyphicon glyphicon-user"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3 col-sm-4">
+                        <a href=""><img src="{% static 'images/default.jpg' %}" alt="" title=""></a>
+                        <div class="art-info">
+                            <h4><a href=""> OrgChart组织架构图控件</a></h4>
+                            <small></small>
+                            <small>jQuery OrgChart 是一个用来绘制组织结构图的 jQuery 插件。 可以自己定加载自己想要的组织架构，通过json的形式</small>
+                        </div>
+                        <div class="art-fields">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            &nbsp;
+                            <span>jQuery插件</span>
+                        </div>
+                        <div class="art-stars">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span >&nbsp;105</span>
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span class="">&nbsp;105</span>
+                            <div class="art-author">
+                                <a href="" data-toggle="tooltip" data-placement="top" data-container="#article"
+                                   data-original-title="笨笨熊"><span class="glyphicon glyphicon-user"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-3 col-sm-4">
+                        <a href=""><img src="{% static 'images/default.jpg' %}" alt="" title=""></a>
+                        <div class="art-info">
+                            <h4><a href=""> OrgChart组织架构图控件</a></h4>
+                            <small></small>
+                            <small>jQuery OrgChart 是一个用来绘制组织结构图的 jQuery 插件。 可以自己定加载自己想要的组织架构，通过json的形式</small>
+                        </div>
+                        <div class="art-fields">
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            &nbsp;
+                            <span>jQuery插件</span>
+                        </div>
+                        <div class="art-stars">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                            <span >&nbsp;105</span>
+                            <span class="glyphicon glyphicon-heart"></span>
+                            <span class="">&nbsp;105</span>
+                            <div class="art-author">
+                                <a href="" data-toggle="tooltip" data-placement="top" data-container="#article"
+                                   data-original-title="笨笨熊"><span class="glyphicon glyphicon-user"></span></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 相关文章推荐部分 -->
+
+                <!-- 文章评论展示部分 -->
+
+                <div class="pl clearfix">
+                    <h4>评论这篇文章（<span>{{ num }}</span>）    <div class="bdsharebuttonbox"><a href="#" class="bds_more" data-cmd="more"></a><a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a><a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a><a href="#" class="bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a><a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a><a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a><a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a></div>
+
+                    <script>                  window._bd_share_config = { "common": { "bdSnsKey": {}, "bdText": "", "bdMini": "2", "bdMiniList": false, "bdPic": "", "bdStyle": "1", "bdSize": "32" }, "share": {} }; with (document) 0[(getElementsByTagName('head')[0] || body).appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=0.js?cdnversion=' + ~(-new Date() / 36e5)];</script>  </h4>
+                    {% for x in page_info.object_list %}
+                    <div class="pl-content clearfix">
+                        <div class="tx"><a href=""><img src="{% static 'images/default.jpg' %}"></a></div>
+                        <div class="pl-header clearfix">
+                            <ul>
+                                <li class="pl-user">{{ request.user.email }}</li>
+                                <li class="pl-time">{{ x.date }}</li>
+                            </ul>
+                        </div>
+                        <div class="pl-wrap clearfix">
+                            {{ x.content }}
+
+                        </div>
+                        <div class="callback-txt clearfix center-block">
+
+
+                                <div class="alert alert-danger false"><i class="fa fa-smile-o"></i>&nbsp;<span>只有登录之后才能评论哦。</span></div>
+                                <textarea id="pl-text2" class="form-control" placeholder="回复内容..."></textarea>
+                                <button type="button" class="btn btn-info">回复</button>
+                        </div>
+
+                    </div>
+                        {% endfor %}
+                {% if page_info %}
+                      <nav aria-label="Page navigation" class="text-center">
+  <ul class="pagination">
+    <li class="{% if not page_info.has_previous %}disabled{% endif %}">
+        {% if page_info.has_previous %}
+      <a href="{% url 'show' %}?article_id={{ article_id }}&page={{ page_info.previous_page_number }}&" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    {% else %}
+     <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    {% endif %}
+    </li>
+      {% for page_num in page_info.paginator.page_range %}
+    <li class="{% if page_num == page_info.number %}active{% endif %}"><a href="{% url 'show' %}?article_id={{ article_id }}&page={{ page_num }}">{{ page_num }}</a></li>
+    {% endfor %}
+      <li class="{% if not page_info.has_next %}disabled{% endif %}">
+      {% if page_info.has_next %}
+      <a href="{% url 'show' %}?article_id={{ article_id }}&page={{ page_info.next_page_number }}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+      {% else %}
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+      {% endif %}
+    </li>
+  </ul>
+</nav>
+                {% endif %}
+                </div>
+                <!-- 文章评论展示部分 -->
+
+                <!-- 文章评论部分 -->
+                <div class="pl clearfix">
+                    <div class="alert alert-danger false"><i class="fa fa-smile-o"></i>&nbsp;<span>只有登录之后才能评论哦。</span></div>
+                    <form action="{% url 'comment' %}?article_id={{ info.id }}" method="post">
+                        {% csrf_token %}
+                    <textarea name="content" id="pl-text" class="form-control" placeholder="说点什么吧..." required></textarea>
+                        {{ form.content.errors }}
+                    <button type="submit" class="btn btn-success pl-sub">提交评论</button>
+                    </form>
+                </div>
+                <!-- 文章评论部分 -->
+            </div>
+        </div>
+        <!-- 左 -->
+
+        <!-- 右 -->
+        <div class="col-lg-2" id="right">
+            <!-- 文章作者部分 -->
+            <div class="user-center clearfix">
+
+                <div class="author-tit">PROMULGATOR</div>
+
+                <span class="headimg center-block"><a href=""><img src="{% static 'images/default.jpg' %}"></a></span>
+                <div class="user-info clearfix">
+                    <a href="" class="user-name"><h4>{% if request.user.is_authenticated %} {{ info.author.email }}{% else %}{{ '小浣熊' }}{% endif %}</h4></a>
+                    <small>hello, world</small>
+                </div>
+
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span>&nbsp;关注作者</button>
+                <a href="{% url 'keep' %}?article_id={{ info.id }}">
+                    <button type="button" class="btn btn-default">
+                    {% if is_keep %}
+                    <span class="glyphicon glyphicon-ok"></span>&nbsp;已被收藏</button>
+                        {% else %}
+                        <span class="glyphicon glyphicon-bookmark"></span>&nbsp;点击收藏</button>
+                    {% endif %}
+                </a>
+            </div>
+            <!-- 文章作者部分 -->
+
+            <!-- 右侧搜索部分 -->
+            <div class="art-search input-group clearfix">
+                <input type="text" class="form-control" placeholder="搜索文章..." id="txt">
+                <span class="input-group-btn"><button type="button" class="btn btn-default" id="sr"><span class="glyphicon glyphicon-search"></span></i></button></span>
+            </div>
+            <!-- 右侧搜索部分 -->
+
+            <!-- 右侧菜单部分 -->
+            <!-- 右侧菜单部分 -->
+            <a href="{% url 'add' %}">
+            <button type="button" class="btn btn-info" id="write"><i class="glyphicon glyphicon-hand-right"></i>&nbsp;&nbsp;&nbsp;开始写作</button>
+            </a>
+        </div>
+        <!-- 右 -->
+    </div>
+</div>
+
+<nav class="foot navbar-inverse navbar-fixed-bottom">
+    <ul class="list-inline">
+        <li class="footer-ss"><a href="">在线反馈</a></li>
+        <li class="footer-ss"><a href="">帮助中心</a></li>
+        <li>Copyright Thousands Find 备案号:赣ICP备13043785号-1.</li>
+    </ul>
+</nav>
+
+<script src="{% static 'js/jquery.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/bootstrap.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/common.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/article.js' %}" type="text/javascript"></script>
+<script>
+    var scrollTop = 0;
+    $(window).scroll(function () {
+        var nowScrollTop = $(document).scrollTop();
+        if (nowScrollTop > scrollTop) {
+            $('.wrap').addClass('hide-wrap');
+        } else {
+            $('.wrap').removeClass('hide-wrap');
+        }
+        scrollTop = nowScrollTop;
+    });
+
+</script>
+</body>
+</html>
+{% endblock %}

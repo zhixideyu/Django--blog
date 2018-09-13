@@ -1,0 +1,96 @@
+{% extends 'homepage2.html' %}
+{% block title %}
+    <title>个人中心</title>
+{% endblock %}
+
+{% block style %}
+    <style>
+
+    </style>
+
+{% endblock %}
+{% block main %}
+
+    <div class="container">
+      <div class="header clearfix">
+        <nav>
+          {% block links %}
+          <ul class="nav nav-pills pull-right">
+
+            <li role="presentation" class="active"><a href="#">个人简介</a></li>
+            <li role="presentation"><a href="#">关于我</a></li>
+            <li role="presentation"><a href="#" >编辑资料</a></li>
+
+          </ul>
+          {% endblock %}
+        </nav>
+        <h3 class="text-muted">{{ request.user.email }}</h3>
+      </div>
+        {# 用户名   #}
+      <div class="jumbotron">
+        {% block user_info %}
+
+
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="inputEmail3" class="col-sm-2 control-label">邮箱</label>
+            <div class="col-sm-10">
+              <input type="email" class="form-control" id="inputEmail3" placeholder="Email" value="{{ request.user.email }}" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">昵称</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword3" placeholder="请输入用户昵称" value="窒息的鱼" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">生日</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword3" placeholder="{%  if request.user.birday %} {{ request.user.birday }}{%  else  %}无生日信息{% endif %}" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">电话</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="inputPassword3" placeholder="{% if request.user.mobile %} {{ request.user.mobile }}{%  else  %}请输入你的电话{% endif %}" disabled>
+            </div>
+          </div>
+        <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">居住地址</label>
+            <div class="col-sm-10">
+                <input name="address" type="text" class="form-control" id="inputPassword3" placeholder="{% if request.user.address %} {{ request.user.address }}{%  else  %}请输入你的居住地址{% endif %}" disabled>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="inputPassword3" class="col-sm-2 control-label">性别</label>
+            <div class="col-sm-offset-2 col-sm-10">
+
+              {% if request.user.sex %}
+
+              <div class="radio">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="man" checked>
+                    男
+                  </label>
+                </div>
+                {% else %}
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="women" checked>
+                    女
+                  </label>
+                </div>
+                {% endif %}
+            </div>
+          </div>
+
+        </form>
+            {% endblock %}
+      </div>
+
+
+
+    </div> <!-- /container -->
+
+{% endblock %}
