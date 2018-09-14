@@ -1,2 +1,2 @@
 # Django--blog
-This is a simple blog project written by Django
+##his is a simple blog project written by Djang
