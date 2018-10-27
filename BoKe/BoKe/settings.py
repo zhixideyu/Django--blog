@@ -139,8 +139,8 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_HOST_USER = 'zkl837497936@sina.com'
-EMAIL_HOST_PASSWORD = 'zkl837497936'
+EMAIL_HOST_USER = 'xxxxxx'
+EMAIL_HOST_PASSWORD = 'xxxxxx'
 EMAIL_HOST = 'smtp.sina.com'
 EMATL_PORT = 25
 EMAIL_USE_TLS = True
